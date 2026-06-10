@@ -1,0 +1,142 @@
+export const PURPOSES = [
+  "Portrait",
+  "Oracle card",
+  "Album cover",
+  "Website hero image",
+  "Poster",
+  "Pattern",
+  "Sticker",
+  "Character design",
+  "Environment",
+  "Product or merch mockup",
+  "Gallery piece",
+  "Social media graphic",
+  "Book cover",
+  "Event artwork",
+];
+
+export const EMOTIONAL_STATES = [
+  "Soothing",
+  "Awakening",
+  "Protection",
+  "Grief-softening",
+  "Inner-child restoration",
+  "Ecstatic wonder",
+  "Rebirth",
+  "Self-trust",
+  "Devotional awe",
+  "Emotional release",
+  "Sacred play",
+  "Gentle courage",
+  "Transformation",
+  "Belonging",
+  "Hope after darkness",
+];
+
+export const COMPANIONS = [
+  "None",
+  "Two small guardians",
+  "Two animal helpers",
+  "Two side figures",
+  "Two inner-child companions",
+  "Two ancestral-feeling protectors",
+  "Two glowing nature spirits",
+  "Focal trio energy",
+];
+
+export const ASPECT_RATIOS = [
+  "Square",
+  "Portrait",
+  "Landscape",
+  "Website hero",
+  "Poster",
+  "Sticker/Icon",
+  "Mobile wallpaper",
+  "Desktop wallpaper",
+];
+
+export const OUTPUT_TYPES = [
+  "Finished image prompt",
+  "Prompt pack",
+  "Oracle card concept",
+  "Character brief",
+  "Poster brief",
+  "Website hero brief",
+  "Sticker/icon prompt",
+  "API payload draft",
+];
+
+export const SLIDER_SECTIONS = [
+  {
+    title: "Vibe sliders",
+    sliders: ["Weirdness", "Darkness", "Sparkle", "Softness", "Mysticism", "Childlike wonder"],
+  },
+  {
+    title: "Colour and light sliders",
+    sliders: [
+      "Iridescence",
+      "Bioluminescence",
+      "Aura glow",
+      "Pearlescence",
+      "Colour intensity",
+      "Sunset warmth",
+      "Spectral rim light",
+    ],
+  },
+  {
+    title: "Symbol and ornament sliders",
+    sliders: [
+      "Sacred geometry",
+      "Floral filigree",
+      "Decorative linework",
+      "Cosmic symbolism",
+      "Nature symbolism",
+      "Yoni symbolism",
+      "Halo intensity",
+      "Ornament density",
+    ],
+  },
+  {
+    title: "Composition sliders",
+    sliders: [
+      "Negative space",
+      "Focal clarity",
+      "Background detail",
+      "Companion presence",
+      "Border decoration",
+      "Symmetry",
+      "Layered depth",
+    ],
+  },
+];
+
+export const DEFAULT_SLIDERS = {
+  Weirdness: 45,
+  Darkness: 20,
+  Sparkle: 35,
+  Softness: 75,
+  Mysticism: 60,
+  "Childlike wonder": 65,
+  Iridescence: 55,
+  Bioluminescence: 40,
+  "Aura glow": 60,
+  Pearlescence: 45,
+  "Colour intensity": 60,
+  "Sunset warmth": 45,
+  "Spectral rim light": 50,
+  "Sacred geometry": 30,
+  "Floral filigree": 50,
+  "Decorative linework": 35,
+  "Cosmic symbolism": 40,
+  "Nature symbolism": 65,
+  "Yoni symbolism": 20,
+  "Halo intensity": 45,
+  "Ornament density": 35,
+  "Negative space": 60,
+  "Focal clarity": 80,
+  "Background detail": 35,
+  "Companion presence": 35,
+  "Border decoration": 45,
+  Symmetry: 40,
+  "Layered depth": 65,
+};

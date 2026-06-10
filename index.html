@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beauty Alchemy Prompt Studio</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <div class="aura aura-one"></div>
+    <div class="aura aura-two"></div>
+    <div class="motif-field" aria-hidden="true">
+      <span class="motif moon"></span>
+      <span class="motif flower"></span>
+      <span class="motif halo"></span>
+      <span class="motif star star-a">✧</span>
+      <span class="motif star star-b">✦</span>
+    </div>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#studio" aria-label="Beauty Alchemy Prompt Studio home">
+          <span class="brand-mark">✦</span>
+          <span>
+            <strong>Beauty Alchemy</strong>
+            <small>Prompt Studio</small>
+          </span>
+        </a>
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="#studio" data-route="studio">Studio</a>
+          <a href="#saved" data-route="saved">Saved Prompts</a>
+          <a href="#about" data-route="about">About the Style</a>
+          <a href="#settings" data-route="settings">Settings / Export</a>
+        </nav>
+      </header>
+
+      <main id="app" class="app-main"></main>
+    </div>
+
+    <template id="studio-template">
+      <section class="studio-hero">
+        <div>
+          <p class="eyebrow">Soft psychedelic creative studio</p>
+          <h1>Beauty Alchemy Prompt Studio</h1>
+          <p class="subtitle">
+            Create luminous image prompts with sacred symbolism, sentient nature, and emotionally safe wonder.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <button class="secondary-button" type="button" data-action="make-softer">Make Softer</button>
+          <button class="secondary-button" type="button" data-action="make-sacred">Make More Sacred</button>
+          <button class="secondary-button" type="button" data-action="make-psychedelic">Make More Psychedelic</button>
+        </div>
+      </section>
+
+      <section class="studio-grid">
+        <form id="prompt-form" class="panel form-panel">
+          <div class="panel-heading">
+            <p class="eyebrow">Image spell</p>
+            <h2>Choose the emotional spell of the image</h2>
+          </div>
+          <div class="field-grid">
+            <label>
+              Project title
+              <input name="title" type="text" placeholder="Moon Garden Oracle" />
+            </label>
+            <label>
+              Image purpose
+              <select name="purpose"></select>
+            </label>
+            <label>
+              Emotional healing state
+              <select name="emotionalState"></select>
+            </label>
+            <label>
+              Companion figure choice
+              <select name="companions"></select>
+            </label>
+            <label class="wide-field">
+              Main subject description
+              <textarea name="subject" rows="3" placeholder="A tender central figure holding a glowing seed of hope"></textarea>
+            </label>
+            <label class="wide-field">
+              Setting or world description
+              <textarea name="setting" rows="3" placeholder="A sentient twilight garden with listening flowers and pearl mist"></textarea>
+            </label>
+            <label class="wide-field">
+              Key symbols
+              <input name="symbols" type="text" placeholder="moon, roses, spiral, golden thread" />
+            </label>
+            <label>
+              Colour notes
+              <input name="colourNotes" type="text" placeholder="orchid, aqua, sunset gold" />
+            </label>
+            <label>
+              Aspect ratio
+              <select name="aspectRatio"></select>
+            </label>
+            <label>
+              Output type
+              <select name="outputType"></select>
+            </label>
+            <label class="wide-field">
+              Extra user notes
+              <textarea name="extraNotes" rows="3" placeholder="Keep the magic soft and safe. Avoid clutter behind the face."></textarea>
+            </label>
+          </div>
+          <div class="button-row">
+            <button class="primary-button" type="submit">Generate Prompt</button>
+            <button class="secondary-button" type="button" data-action="generate-variants">Generate 3 Variants</button>
+            <button class="secondary-button" type="button" data-action="reset">Reset to Balanced Defaults</button>
+            <button class="secondary-button" type="button" data-action="sticker">Simplify for Sticker/Icon</button>
+          </div>
+        </form>
+
+        <aside class="panel slider-panel">
+          <div class="panel-heading">
+            <p class="eyebrow">Alchemy controls</p>
+            <h2>How weird should the dream become?</h2>
+          </div>
+          <div class="preset-row" id="preset-row"></div>
+          <div id="slider-sections"></div>
+        </aside>
+      </section>
+
+      <section class="output-layout">
+        <article class="panel output-panel">
+          <div class="panel-heading">
+            <p class="eyebrow">Generated result</p>
+            <h2>Finished prompt</h2>
+          </div>
+          <div id="output-content" class="empty-state">Fill in the form, tune the sliders, then generate a prompt.</div>
+        </article>
+        <article class="panel variants-panel">
+          <div class="panel-heading">
+            <p class="eyebrow">Prompt variants</p>
+            <h2>Make it bloom</h2>
+          </div>
+          <div id="variant-content" class="empty-state">Three variants will appear here.</div>
+        </article>
+      </section>
+    </template>
+
+    <template id="saved-template">
+      <section class="page-heading">
+        <p class="eyebrow">Local library</p>
+        <h1>Saved Prompts</h1>
+        <p class="subtitle">Saved projects live in this browser’s localStorage.</p>
+      </section>
+      <section id="saved-list" class="saved-list"></section>
+    </template>
+
+    <template id="about-template">
+      <section class="about-page panel">
+        <p class="eyebrow">About the style</p>
+        <h1>Beauty as emotional alchemy</h1>
+        <p>
+          Beauty Alchemy Prompt Studio creates image prompts that combine luminous colour, sacred symbolism,
+          sentient nature, and emotionally safe psychedelia. It is designed for oracle cards, art prints,
+          stickers, album covers, website visuals, and transformational creative projects.
+        </p>
+        <p>
+          The prompt engine favors tender focal subjects, coherent light, quiet negative space, purposeful
+          ornament, controlled sparkle, velvety low-noise shadows, and sincere restorative emotion.
+        </p>
+      </section>
+    </template>
+
+    <template id="settings-template">
+      <section class="about-page panel">
+        <p class="eyebrow">Future integration</p>
+        <h1>Settings / Export</h1>
+        <p>
+          Image rendering is handled by the local backend endpoint at <code>/api/render-image</code> using
+          <code>gpt-image-2</code>. Set <code>OPENAI_API_KEY</code> in the server environment before starting
+          the app. API keys are never placed in browser code.
+        </p>
+        <button class="secondary-button" type="button" id="export-all">Export all saved prompts</button>
+      </section>
+    </template>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>
