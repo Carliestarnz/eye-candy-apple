@@ -23,7 +23,10 @@ const readBody = async (request) => {
 };
 
 const sendJson = (response, status, payload) => {
-  response.writeHead(status, { "Content-Type": "application/json; charset=utf-8" });
+  response.writeHead(status, {
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "no-store",
+  });
   response.end(JSON.stringify(payload));
 };
 
@@ -34,6 +37,17 @@ const normalizeSize = (resolutionTarget) => {
     : "2048x2048";
 };
 
+const readOpenAiKey = async () => {
+  if (process.env.OPENAI_API_KEY) return process.env.OPENAI_API_KEY;
+  try {
+    const envText = await readFile(join(root, ".env"), "utf8");
+    const keyLine = envText.split(/\r?\n/).find((line) => /^\s*OPENAI_API_KEY\s*=/.test(line));
+    return keyLine ? keyLine.replace(/^\s*OPENAI_API_KEY\s*=\s*/, "").trim().replace(/^[\'"]|[\'"]$/g, "") : "";
+  } catch {
+    return "";
+  }
+};
+
 const extractImage = (data) => {
   const image = data?.data?.[0];
   if (image?.b64_json) return `data:image/png;base64,${image.b64_json}`;
@@ -42,7 +56,8 @@ const extractImage = (data) => {
 };
 
 const renderImage = async (request, response) => {
-  if (!process.env.OPENAI_API_KEY) {
+  const openAiKey = await readOpenAiKey();
+  if (!openAiKey) {
     sendJson(response, 500, {
       error:
         "OPENAI_API_KEY is not set for the local server. Restart the server with that environment variable to render images.",
@@ -60,7 +75,7 @@ const renderImage = async (request, response) => {
   const apiResponse = await fetch("https://api.openai.com/v1/images/generations", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      Authorization: `Bearer ${openAiKey}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
@@ -96,6 +111,11 @@ const renderImage = async (request, response) => {
 
 const serveStatic = async (request, response) => {
   const pathname = decodeURIComponent(new URL(request.url, "http://127.0.0.1").pathname);
+  if (pathname === "/favicon.ico") {
+    response.writeHead(204, { "Cache-Control": "no-store" });
+    response.end();
+    return;
+  }
   const filePath = resolve(join(root, pathname === "/" ? "index.html" : pathname));
   if (!filePath.startsWith(root)) {
     response.writeHead(403);
@@ -105,7 +125,10 @@ const serveStatic = async (request, response) => {
 
   try {
     const data = await readFile(filePath);
-    response.writeHead(200, { "Content-Type": contentTypes[extname(filePath)] || "application/octet-stream" });
+    response.writeHead(200, {
+      "Content-Type": contentTypes[extname(filePath)] || "application/octet-stream",
+      "Cache-Control": "no-store",
+    });
     response.end(data);
   } catch {
     response.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
@@ -115,7 +138,8 @@ const serveStatic = async (request, response) => {
 
 const server = createServer(async (request, response) => {
   try {
-    if (request.method === "POST" && request.url === "/api/render-image") {
+    const pathname = new URL(request.url, "http://127.0.0.1").pathname;
+    if (request.method === "POST" && pathname === "/api/render-image") {
       await renderImage(request, response);
       return;
     }
