@@ -129,6 +129,14 @@
             <h2>Finished prompt</h2>
           </div>
           <div id="output-content" class="empty-state">Fill in the form, tune the sliders, then generate a prompt.</div>
+          <form id="combined-package-form" class="combined-package-form">
+            <label class="checkbox-row">
+              <input type="checkbox" name="includePromptPackage" checked />
+              <span>Choose this generated prompt package</span>
+            </label>
+            <button class="secondary-button" type="submit">Submit Selected Prompt</button>
+          </form>
+          <div id="combined-package-output" class="combined-package-output"></div>
         </article>
         <article class="panel variants-panel">
           <div class="panel-heading">
@@ -178,6 +186,6 @@
       </section>
     </template>
 
-    <script type="module" src="./src/app.js"></script>
+    <script type="module" src="./src/app.js?v=6"></script>
   </body>
 </html>
