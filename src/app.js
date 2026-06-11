@@ -9,7 +9,7 @@ import {
 } from "./promptTypes.js";
 import { PRESETS } from "./presets.js";
 import { buildPrompt } from "./promptBuilder.js";
-import { renderImageFromPrompt } from "./imageService.js";
+import { renderImageFromPrompt } from "./imageService.js?v=6";
 import {
   deleteSavedPrompt,
   duplicateSavedPrompt,
@@ -112,6 +112,33 @@ const settingsText = (settings) =>
     `Style strength: ${settings.styleStrength}`,
     `Notes: ${settings.notes}`,
   ].join("\n");
+
+const combinedPackageText = (result) =>
+  [
+    "Prompt:",
+    result.prompt,
+    "",
+    "Negative prompt:",
+    result.negativePrompt,
+    "",
+    "Settings:",
+    settingsText(result.settings),
+  ].join("\n");
+
+const renderCombinedPackage = (result) => {
+  const target = document.querySelector("#combined-package-output");
+  if (!target) return;
+  const text = combinedPackageText(result);
+  target.innerHTML = `
+    <section class="output-block combined-package-box">
+      <div class="output-title">
+        <h3>Combined prompt package</h3>
+        <button class="copy-button" type="button" data-copy-combined>Copy Combined Box</button>
+      </div>
+      <pre>${text}</pre>
+    </section>
+  `;
+};
 
 const renderOutput = (result) => {
   const output = document.querySelector("#output-content");
@@ -320,6 +347,18 @@ const renderStudio = (draft) => {
     generate();
   });
 
+  document.querySelector("#combined-package-form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const selected = event.currentTarget.elements.includePromptPackage.checked;
+    if (!selected) {
+      document.querySelector("#combined-package-output").innerHTML =
+        `<div class="empty-state">Select the prompt package checkbox before submitting.</div>`;
+      return;
+    }
+    if (!latestResult) generate();
+    renderCombinedPackage(latestResult);
+  });
+
   app.oninput = (event) => {
     if (!event.target.matches("[data-slider]")) return;
     sliders[event.target.dataset.slider] = Number(event.target.value);
@@ -370,6 +409,9 @@ const renderStudio = (draft) => {
     }
     if (button.dataset.copyVariant && latestResult) {
       await copyText(latestResult.variants[Number(button.dataset.copyVariant)], button);
+    }
+    if (button.hasAttribute("data-copy-combined") && latestResult) {
+      await copyText(combinedPackageText(latestResult), button);
     }
   };
 };
